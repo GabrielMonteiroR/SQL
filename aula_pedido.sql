@@ -1,4 +1,4 @@
--- Active: 1702404134199@@127.0.0.1@3306@aula_pedido
+
 CREATE DATABASE aula_pedido;
 
 USE aula_pedido;
@@ -76,9 +76,9 @@ CREATE TABLE produto (
 INSERT INTO produto (nome,valor,descricao,imagem,categoria_id) VALUES
 ("X-Bacon",39.90,"Hamburguer,Salada,bacon,queijo prato,cebola","xbacon.svg",1),
 ("X-Salada", 25.90,"Hamburguer,Salada,tomate,mussarela,azeitona","xsalada.svg",1),
-("Pizza de Calabresa",40.00,"Massa,calabresa,mussarela,orégano","pizzacalabre.svg",5),
-("Coca-cola 2L",08.00,"Açucar,xarope,coca,cola","coca.svg",6),
-("Sprite 2L",05.00,"Açucar,xarope, Suco de Limão","sprite.svg",6);
+("Pizza de Calabresa",40.00,"Massa,calabresa,mussarela,orégano","pizzacalabre.svg",2),
+("Coca-cola 2L",08.00,"Açucar,xarope,coca,cola","coca.svg",3),
+("Sprite 2L",05.00,"Açucar,xarope, Suco de Limão","sprite.svg",3);
 
 SELECT id,nome,valor FROM produto ORDER BY valor DESC;
 
@@ -107,6 +107,57 @@ INSERT INTO pedido (data,usuario_id,formaPagamento_id) VALUES
 INSERT INTO pedido (data,usuario_id,formaPagamento_id) VALUES
 (NOW(),1,1),
 (NOW(),1,3);
+
+SELECT * FROM categoria;
+
+ALTER TABLE categoria
+ADD ativo char(1);
+
+UPDATE categoria SET ativo = 'S' WHERE id = 1;
+
+UPDATE categoria SET nome = "Pizzas", ativo = "S" WHERE id = 2;
+
+ALTER TABLE categoria
+MODIFY COLUMN ativo char(3);
+
+UPDATE categoria set ativo = "Sim";
+
+ALTER TABLE categoria
+DROP COLUMN ativo;
+
+CREATE TABLE item (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    pedido_id BIGINT NOT NULL,
+    produto_id BIGINT NOT NULL,
+    quantidade INT NOT NULL,
+    valor FLOAT NOT NULL,
+    FOREIGN KEY (pedido_id) REFERENCES pedido(id),
+    FOREIGN KEY (produto_id) REFERENCES produto(id)
+);
+
+SELECT * FROM produto;
+
+INSERT INTO item (pedido_id,produto_id,quantidade,valor)
+VALUES
+(1,16,2,9.99),
+(1,20,4,5.99);
+
+SELECT produto.id,produto.nome,produto.valor,
+(SELECT categoria.nome FROM categoria WHERE categoria.id = produto.categoria_id) categoria
+FROM produto ORDER BY produto.nome;
+
+SELECT pedido.*, 
+(SELECT usuario.nome FROM usuario WHERE usuario.id = pedido.usuario_id) nome_do_usuario
+FROM pedido;
+
+SELECT p.*,
+(SELECT u.nome FROM usuario u WHERE u.id = p.usuario_id ) nome_usuario,
+(SELECT f.descricao FROM formaPagamento f WHERE f.id = p.formaPagamento_id) forma_pagamento
+FROM pedido p;
+
+SELECT i.*,
+(SELECT p.nome FROM produto p WHERE p.id = i.produto_id) nome_produto
+FROM item i WHERE i.pedido_id = 1;
 
 
 
