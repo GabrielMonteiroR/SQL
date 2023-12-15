@@ -159,7 +159,40 @@ SELECT i.*,
 (SELECT p.nome FROM produto p WHERE p.id = i.produto_id) nome_produto
 FROM item i WHERE i.pedido_id = 1;
 
+INSERT INTO produto (nome,valor,descricao,imagem,categoria_id)
+VALUES
+("X-tudo",50.00,"Pão, hamburguer,salschicha,alface","xtudo.jpg",1);
 
+SELECT nome,valor FROM produto WHERE valor > 30.00 AND categoria_id = 1;
 
+SELECT nome,valor FROM produto WHERE valor <= 39.99 AND categoria_id != 1;
 
+SELECT nome,valor FROM produto WHERE valor BETWEEN 30.00 AND 40.00 ORDER BY valor;
 
+SELECT *, DATE_FORMAT(data,'%d/%m/%Y %h:%m:%s') data_BR
+ FROM pedido ORDER BY data DESC;
+
+INSERT INTO pedido VALUES
+(NULL,NOW(),2,1),
+(NULL,NOW(),3,2),
+(NULL,NOW(),1,1),
+(NULL,NOW(),1,4);
+
+SELECT * FROM item;
+
+INSERT INTO item VALUES
+(NULL ,4 ,16 ,2, 39.99),
+(NULL ,4 ,20 ,3, 39.90);
+
+SELECT * FROM item WHERE pedido_id = 1;
+
+SELECT i.id, (SELECT p.nome FROM produto p WHERE p.id = i.produto_id) produto,
+i.valor,i.quantidade,
+(i.valor * i.quantidade) total
+FROM item i WHERE i.pedido_id = 1;
+
+SELECT(
+    SELECT SUM(i.valor *i. quantidade) quantidade
+    FROM item i 
+    WHERE i.pedido_id = p.id
+) total FROM pedido p WHERE p.id = 1; 
