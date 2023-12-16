@@ -196,3 +196,6 @@ SELECT(
     FROM item i 
     WHERE i.pedido_id = p.id
 ) total FROM pedido p WHERE p.id = 1; 
+
+aaaa.ADD
+
