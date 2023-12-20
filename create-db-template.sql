@@ -1,16 +1,20 @@
-CREATE DATABASE aula_pedido;
+CREATE DATABASE exemplo;
 
-#USAR BANCO DE DADDOS
-USE aula_pedido;
+USE exemplo;
 
-#CRIAR TABELA
-CREATE TABLE categoria (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(25) UNIQUE NOT NULL
+CREATE TABLE cliente (
+    nome VARCHAR(30),
+    sexo CHAR(1),
+    email VARCHAR(30),
+    cpf INT(11),
+    telefone VARCHAR(30),
+    endereco VARCHAR(100)
 );
 
-#INSERIR UM DADO NA CATEGORIA
-INSERT INTO categoria VALUES
-(NULL,"Lanches");
+SHOW TABLES;
+
+DESC cliente;
+
+
 
 
