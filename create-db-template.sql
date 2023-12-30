@@ -25,7 +25,24 @@ VALUES
 /*Comandos Select
 Seleção projeção e junção*/
 
+SELECT NOW() AS data_consulta, "Gabriel" AS programador;
 
+SELECT nome,sexo,email FROM cliente;
 
+SELECT nome AS cliente ,sexo,email,endereco FROM cliente;
 
+SELECT sexo, email, endereco FROM cliente;
+
+SELECT * FROM cliente;
+
+SELECT nome AS cliente ,sexo,email,endereco,NOW() AS data_De_consulta FROM cliente;
+
+/*Trabalhando com filtros*/
+
+SELECT nome AS cliente, sexo, email, endereco, NOW() AS Data_de_Consulta FROM cliente
+WHERE sexo = "M";
+
+SELECT nome,sexo FROM cliente WHERE endereco  = "Casa1";
+/*% termina com*/
+SELECT nome,sexo,endereco FROM cliente WHERE endereco like '%Casa%';
 
